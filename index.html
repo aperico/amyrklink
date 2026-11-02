@@ -26,6 +26,68 @@
 #milestones .milestone{display:flex!important;align-items:center!important;justify-content:center!important;position:absolute!important;top:-16px!important;transform:translateX(-50%)!important;min-width:30px!important;height:30px!important;padding:0!important;background:#142d3d!important;border:2px solid #e9b565!important;border-radius:5px!important;color:#ffcf7b!important;font-size:17px!important;line-height:1!important;box-shadow:0 2px 8px #0008!important;z-index:3!important}
 #milestones .milestone:hover,#milestones .milestone:focus-visible,#milestones .milestone.selected{background:#e6ae58!important;color:#091c2b!important;transform:translateX(-50%) scale(1.2)!important;z-index:6!important}
 @media(max-width:600px){#milestones .milestone{min-width:23px!important;height:23px!important;font-size:12px!important;top:-13px!important}.milestoneWrap{padding:12px 14px!important}}
+
+/* Mobile-first refinement, all layout changes remain confined to small screens */
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{overflow-x:hidden}
+button,a,input{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #f5bd70;outline-offset:3px}
+#map{display:block;max-width:100%;aspect-ratio:900/480}
+#eventFeed li .eventHead{flex-wrap:wrap}
+#eventFeed li .eventStage{white-space:normal}
+#progress{min-height:36px;cursor:pointer}
+#mapPhotoPanel{min-width:0}
+#mapPhotoPanel>div{min-width:0}
+#mapPhotoPanel a{overflow-wrap:anywhere}
+@media(max-width:850px){
+ header{padding:22px 20px 18px}
+ main{display:flex;flex-direction:column;gap:14px;padding:14px}
+ main>section,main>.panel{width:100%;min-width:0;padding:15px}
+ nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ nav button{font-size:13px;padding:12px 8px;min-height:48px;line-height:1.3}
+ #map{width:100%;height:auto}
+ #mapPhotoPanel img{flex-shrink:0}
+ #eventFeed li{padding:13px}
+ footer{padding:22px 18px}
+}
+@media(max-width:540px){
+ header{padding:19px 16px 16px}
+ h1{font-size:clamp(29px,9vw,39px);line-height:1.12}
+ header p{font-size:14px;margin-bottom:0}
+ .tag{font-size:11px;letter-spacing:.6px}
+ main{padding:9px;gap:12px}
+ main>section,main>.panel{padding:11px;border-radius:12px}
+ nav{display:grid;grid-template-columns:1fr;gap:7px;margin:5px 0 12px}
+ nav button{width:100%;text-align:left;min-height:46px;font-size:14px;padding:10px 14px}
+ #map{height:clamp(220px,62vw,360px);aspect-ratio:auto}
+ #mapPhotoPanel{padding:10px!important;gap:10px!important;align-items:center!important}
+ #mapPhotoPanel img{width:92px!important;height:78px!important}
+ #mapPhotoPanel strong{font-size:14px}
+ #mapPhotoPanel p{font-size:11px!important;line-height:1.3;margin:3px 0!important}
+ #mapPhotoPanel a{font-size:12px!important}
+ .control{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;margin:14px 0}
+ #play{min-height:46px;min-width:78px;padding:9px 10px;font-weight:650}
+ #progress{width:100%;min-width:0}
+ #pct{font-size:13px;min-width:38px;text-align:right}
+ .milestoneWrap{margin:9px 0 14px!important;padding:12px 10px 3px!important}
+ .milestoneLabel{font-size:11px;align-items:flex-start}
+ .milestoneLabel span{max-width:110px;text-align:right}
+ #milestones{height:45px!important;margin:16px 16px 0!important}
+ #milestones .milestone{min-width:29px!important;height:29px!important;font-size:13px!important;top:-16px!important;touch-action:manipulation}
+ #eventFeed{gap:8px}
+ #eventFeed li .eventHead{display:flex;flex-direction:column;align-items:start;gap:4px}
+ #eventFeed li strong{font-size:15px}
+ #eventFeed li p{font-size:13px}
+ #journeyFeed>div:first-child{align-items:flex-start!important}
+ #journeyFeed>div:first-child h3{font-size:17px}
+ #journeyFeed>div:first-child span{font-size:11px!important;text-align:right}
+ .panel h2{font-size:23px}
+ .panel img{max-width:100%}
+ .boat{height:auto}
+ details summary{min-height:44px;padding:12px 0;display:flex;align-items:center}
+ footer{font-size:12px;line-height:1.65}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{scroll-behavior:auto!important}}
 </style>
 <header><div class="tag">INTERACTIVE EXPEDITION ATLAS</div><h1>Amyr Klink: Three Solo Voyages</h1><p>Follow the reconstructed routes of a Brazilian navigator, encounter stories along the way, and discover his boats. The map and controls work without network access.</p></header>
 <main><section><nav id="tabs"></nav><svg id="map" viewBox="0 0 900 480" role="img" aria-label="Illustrative world map with voyage route"><defs><pattern id="waves" width="26" height="24" patternUnits="userSpaceOnUse"><path d="M0 18 Q7 12 14 18 T28 18" fill="none" stroke="#245369" opacity=".45"/></pattern></defs><rect width="900" height="480" fill="url(#waves)"/><g id="grids"></g><g id="land"></g><path id="route" class="route"/><circle id="position" r="7" fill="#ffda85" class="marker"/><g id="labels"></g></svg><div id="mapPhotoPanel" style="display:flex;align-items:center;gap:14px;padding:12px;background:#173748;border-radius:10px;margin-top:12px"><img id="mapPhoto" alt="Historic boat photograph" style="height:92px;width:125px;object-fit:cover;border-radius:7px" onerror="this.style.display='none'"><div><strong id="mapPhotoTitle">Historical vessel</strong><p style="font-size:12px;margin:5px 0">Boat used on this voyage · image from original archival coverage</p><a id="mapPhotoLink" target="_blank" rel="noopener" style="font-size:13px">Open original photograph ↗</a></div></div><div class="control"><button id="play">▶ Play</button><input id="progress" type="range" min="0" max="1000" value="0" aria-label="Journey position"><span id="pct">0%</span></div><div class="milestoneWrap"><div class="milestoneLabel">EVENT MILESTONES <span>Click a ◆ to jump</span></div><div id="milestones" aria-label="Clickable journey milestones"></div></div><div id="journeyFeed" aria-label="Expedition journey log"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px"><h3 style="margin:0">Journey log</h3><span style="color:#a2bfcb;font-size:12px">Newest discoveries first</span></div><p style="font-size:12px;margin:6px 0">Events appear as the route progresses. Stages are approximate unless explicitly dated; the slider is not an actual GPS timeline.</p><ol id="eventFeed" aria-live="polite"></ol></div><p style="font-size:13px">Geography and course lines are schematic reconstructions, not original logbook tracks. Move the slider to discover a new historical milestone.</p></section>
